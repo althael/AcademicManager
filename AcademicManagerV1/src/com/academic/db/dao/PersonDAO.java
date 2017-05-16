@@ -18,9 +18,12 @@ public class PersonDAO extends DAOImpl<Person> {
 	public PersonDAO(Connection conn) throws SQLException {
 		super(conn);
 		// TODO Auto-generated constructor stub
-		selectByIdStatement = (PreparedStatement) dbConnection.prepareStatement("SELECT personId,name,surname,personType,dateOfBirth,email,phoneNumber,address,taxNumber,bankAccount,username,password,sex FROM person WHERE personId=?;");
-		selectAllStatement = (PreparedStatement) dbConnection.prepareStatement("SELECT * FROM person;");
-		countStatement = (PreparedStatement) dbConnection.prepareStatement("SELECT COUNT(*) FROM person;");
+		selectByIdStatement = (PreparedStatement) dbConnection.prepareStatement("SELECT personId,name,surname,type,dateOfBirth,email,phoneNumber,address,taxNumber,bankAccount,sex FROM person WHERE personId=?;",
+				ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		selectAllStatement = (PreparedStatement) dbConnection.prepareStatement("SELECT * FROM person;",
+				ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		countStatement = (PreparedStatement) dbConnection.prepareStatement("SELECT COUNT(*) FROM person;",
+				ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 	}
 
 	@Override
@@ -35,15 +38,14 @@ public class PersonDAO extends DAOImpl<Person> {
 				person.setPersonId(resultSet.getInt("personId"));
 				person.setName(resultSet.getString("name"));
 				person.setSurname(resultSet.getString("surname"));
-				person.setPersonType(resultSet.getInt("personType"));
+				person.setType(resultSet.getString("type"));
 				person.setDateOfBirth(resultSet.getString("dateOfBirth"));
 				person.setEmail(resultSet.getString("email"));
 				person.setPhoneNumber(resultSet.getString("phoneNumber"));
 				person.setAddress(resultSet.getString("address"));
 				person.setTaxNumber(resultSet.getString("taxNumber"));
 				person.setBankAccount(resultSet.getString("bankAccount"));
-				person.setUsername(resultSet.getString("username"));
-				person.setPassword(resultSet.getString("password"));
+				person.setSex(resultSet.getString("sex"));
 			}
 			resultSet.close();
 		} catch (SQLException e) {
@@ -67,15 +69,14 @@ public class PersonDAO extends DAOImpl<Person> {
 				person.setPersonId(resultSet.getInt("personId"));
 				person.setName(resultSet.getString("name"));
 				person.setSurname(resultSet.getString("surname"));
-				person.setPersonType(resultSet.getInt("personType"));
+				person.setType(resultSet.getString("type"));
 				person.setDateOfBirth(resultSet.getString("dateOfBirth"));
 				person.setEmail(resultSet.getString("email"));
 				person.setPhoneNumber(resultSet.getString("phoneNumber"));
 				person.setAddress(resultSet.getString("address"));
 				person.setTaxNumber(resultSet.getString("taxNumber"));
 				person.setBankAccount(resultSet.getString("bankAccount"));
-				person.setUsername(resultSet.getString("username"));
-				person.setPassword(resultSet.getString("password"));
+				person.setSex(resultSet.getString("sex"));
 				personList.add(person);
 			}
 			resultSet.close();
@@ -107,6 +108,23 @@ public class PersonDAO extends DAOImpl<Person> {
 			return -1;
 		}
 		return count;
+	}
+	@Override
+	public void add(Person t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Person t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Person t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
